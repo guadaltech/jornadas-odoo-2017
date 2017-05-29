@@ -21,7 +21,8 @@ for elements in sys.argv:
 	variable_entrada = elements.split("=:")
 	print variable_entrada
 	if len(variable_entrada) == 1 or variable_entrada[1] == '':
-		raise NameError('Error: Parametros de entrada no validos [python ejemplo.py variable=:contenido]> =:')
+		raise NameError('Error: Parametros de entrada no validos \
+			[python ejemplo.py variable=:contenido]> =:')
 	list_argv.append(variable_entrada)
 
 error=True
@@ -39,7 +40,8 @@ for argv in list_argv:
 			dic_argv["debug"] = False
 
 		# Random
-		cod_referencia = "%s-%s" % (string_pass_random(4, "lower"), key_id(ruta_exec + "id_number"))
+		cod_referencia = "%s-%s" % (string_pass_random(4, "lower"), \
+			key_id(ruta_exec + "id_number"))
 		nombre_db = "db-%s" % (cod_referencia)
 		pass_db = string_pass_random(45, "upper")
 		master_pass = string_pass_random(67, "lower")
@@ -55,7 +57,9 @@ for argv in list_argv:
 			init_verify(metodo, dic_argv)
 			create_volumes_gcloud(nombre_odoo, dic_argv["storage"], dic_argv,api)
 			create_service_odoo_ps(nombre_odoo, nombre_db, dic_argv, api, metodo)
-			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, kminion_ip)
+			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, \
+				image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, \
+				kminion_ip)
 			create_ingress(nombre_odoo, dic_argv, api, "odoo")
 		elif metodo == "odoo-simple":
 			image_odoo = "gcr.io/gcloud-project/odoo-10-xxx:latest"
@@ -63,7 +67,9 @@ for argv in list_argv:
 			init_verify(metodo, dic_argv)
 			create_volumes_gcloud(nombre_odoo, dic_argv["storage"], dic_argv,api)
 			create_service_odoo_ps(nombre_odoo, nombre_db, dic_argv, api, metodo)
-			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, kminion_ip)
+			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, \
+				image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, \
+				kminion_ip)
 			create_ingress(nombre_odoo, dic_argv, api, "odoo")
 		elif metodo == "odoo-prestashop":
 			image_odoo = "gcr.io/gcloud-project/odoo-10-xxx:latest"
@@ -72,17 +78,25 @@ for argv in list_argv:
 			image_mysql = "gcr.io/gcloud-project/mysql-xxx:latest"
 			nom_dom_ps = dic_argv["ps_dominio"] 
 			init_verify(metodo, dic_argv)
-			create_gcloudDisks(nombre_odoo, dic_argv["storage"], dic_argv, ruta_exec + 'credentials/application_default_credentials.json', 'plasma-weft-162417', 'us-central1-a')
+			create_gcloudDisks(nombre_odoo, dic_argv["storage"], dic_argv, \
+				ruta_exec + 'credentials/application_default_credentials.json', \
+				'plasma-weft-162417', 'us-central1-a')
 			create_volumes_gcloud(nombre_odoo, dic_argv["storage"], dic_argv,api)
 			create_service_odoo_ps(nombre_odoo, nombre_db, dic_argv, api, metodo)
-			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, kminion_ip)
+			create_rc_odoo(nombre_odoo, master_pass, image_odoo, nombre_db, pass_db, \
+			 image_db, dic_argv, api, metodo, nombre_mysql, pass_mysql, key_api_ps, \
+			 kminion_ip)
 			create_service(nombre_ps, dic_argv, api, "prestashop", "ps-svc.yaml", metodo)
-			create_service(nombre_mysql, dic_argv, api, "prestashop", "mysql-svc-vol.yaml", metodo)
-			create_rc_mysql(nombre_mysql, image_mysql, nombre_odoo, pass_mysql, nom_dom_ps, dic_argv, api)
-			create_rc_ps(key_api_ps, nombre_ps, image_ps, nombre_odoo, nombre_mysql, pass_mysql, nom_dom_ps, dic_argv, api)
+			create_service(nombre_mysql, dic_argv, api, "prestashop",\
+			 "mysql-svc-vol.yaml", metodo)
+			create_rc_mysql(nombre_mysql, image_mysql, nombre_odoo,\
+			 pass_mysql, nom_dom_ps, dic_argv, api)
+			create_rc_ps(key_api_ps, nombre_ps, image_ps,\
+			 nombre_odoo, nombre_mysql, pass_mysql, nom_dom_ps, dic_argv, api)
 			create_ingress(nombre_odoo, dic_argv, api, "odoo")
 			create_ingress(nombre_ps, dic_argv, api, "ps")
 if error:
 	raise NameError('[ERROR 1001] No encontro metodo valido.')
 else:
-	print_summary (nombre_odoo, master_pass, nombre_db, pass_db, nombre_ps, nombre_mysql, pass_mysql, key_api_ps, dic_argv, metodo)
+	print_summary (nombre_odoo, master_pass, nombre_db, pass_db,\
+	 nombre_ps, nombre_mysql, pass_mysql, key_api_ps, dic_argv, metodo)
