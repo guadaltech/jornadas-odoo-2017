@@ -79,7 +79,8 @@ def init_verify(metodo, dic_argv):
 	try:
 		base64.decodestring(dic_argv["LOGO_BASE64"])
 	except binascii.Error:
-		print "[ERROR 1005] La cadena LOGO_BASE64 no esta correctamente codificada y no puede ser usada"
+		print "[ERROR 1005] La cadena LOGO_BASE64 no esta\
+		 correctamente codificada y no puede ser usada"
 		sys.exit(0)
 
 def key_id(file_id_number):
@@ -95,9 +96,11 @@ def key_id(file_id_number):
 
 def string_pass_random (num, tipe_p):
 	if tipe_p == "upper":
-		clave = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(num))
+		clave = ''.join(random.choice(string.ascii_uppercase + string.digits)\
+		 for _ in range(num))
 	if tipe_p == "lower":
-		clave = ''.join(random.choice(string.lowercase + string.digits) for _ in range(num))
+		clave = ''.join(random.choice(string.lowercase + string.digits)\
+		 for _ in range(num))
 	return clave
 
 def load_file_yaml (ruta):
@@ -113,7 +116,8 @@ def arguments_to_dic (list_p):
 		dic[z[0]]=z[1]
 	return dic
 
-def print_summary (nombre_odoo, master_pass, nombre_db, pass_db, nombre_ps, nombre_mysql, pass_mysql, key_api_ps, dic_argv, metodo):
+def print_summary (nombre_odoo, master_pass, nombre_db, \
+	pass_db, nombre_ps, nombre_mysql, pass_mysql, key_api_ps, dic_argv, metodo):
 	print "* Creado contenedores con metodo: <[ %s ]>" % (metodo)
 	print "	Referencia en almacenamiento: %s" % (nombre_odoo)
 
